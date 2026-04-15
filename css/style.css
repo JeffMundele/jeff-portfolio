@@ -92,14 +92,12 @@ transform:rotate(-45deg) translate(6px,-6px);
 /* ================= HERO ================= */
 .hero{
 min-height:100vh;
-padding-top:120px;
-padding-bottom:80px;
+padding:140px 10% 80px; /* ✅ top | left-right | bottom */
 display:flex;
 flex-direction:column;
 justify-content:center;
 align-items:center;
 text-align:center;
-padding:0 10%;
 }
 
 .hero h1{
@@ -511,6 +509,80 @@ transform:translateY(-5px);
 background:#334155;
 }
 
+/* GRID */
+.testimonials {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 25px;
+}
+
+/* CARD */
+.testimonial {
+  background: #1e293b;
+  padding: 25px;
+  border-radius: 12px;
+  transition: 0.3s;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  position: relative;
+}
+
+/* effet hover */
+.testimonial:hover {
+  transform: translateY(-8px);
+  background: #334155;
+}
+
+/* HEADER */
+.testimonial-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 15px;
+}
+
+.testimonial-header img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #38bdf8;
+}
+
+/* NOM */
+.testimonial-header h4 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.testimonial-header span {
+  font-size: 13px;
+  color: #94a3b8;
+}
+
+/* ÉTOILES */
+.stars {
+  color: #facc15;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+/* TEXTE */
+.testimonial p {
+  font-style: italic;
+  color: #cbd5f5;
+  font-size: 14px;
+}
+
+/* MODE CLAIR */
+body.light .testimonial {
+  background: #ffffff;
+  color: #020617;
+}
+
+body.light .testimonial p {
+  color: #334155;
+}
+
 /* ================= CONTACT ================= */
 .contact form{
 max-width:500px;
@@ -554,14 +626,6 @@ font-size:20px;
 text-decoration:none;
 transition:all 0.3s ease;
 position:relative;
-}
-
-/* HOVER MODERNE */
-.social-links a:hover{
-transform:translateY(-6px) scale(1.1);
-background:#38bdf8;
-color:#020617;
-box-shadow:0 10px 25px rgba(56,189,248,0.4);
 }
 
 /* ESPACEMENT FOOTER */
@@ -642,12 +706,16 @@ font-size:18px;
 }
 
 .hero{
-padding:0 6%;
+padding:120px 6% 60px; /* ✅ espace en haut */
 }
 
 .hero h1{
 font-size:26px;
-line-height:1.4;
+line-height:1.5;
+}
+
+.hero span{
+display:inline; /* évite les cassures bizarres */
 }
 
 section{
@@ -803,4 +871,8 @@ body.light .hero-subtitle{
   margin-top:20px;
   font-size:14px;
   color:#94a3b8;
+}
+
+html {
+scroll-padding-top: 100px;
 }
