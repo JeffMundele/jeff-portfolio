@@ -772,6 +772,18 @@ section{
 padding:50px 6%;
 }
 
+.about {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .about img {
+    width: 100%;
+    max-width: 250px;
+    margin: 0 auto 20px auto;
+    display: block;
+  }
+
 .social-links{
 gap:12px;
 }
