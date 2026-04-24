@@ -281,16 +281,18 @@ margin-bottom:30px;
 /* ================= ABOUT ================= */
 .about{
 display:grid;
-grid-template-columns:1fr 1fr;
+grid-template-columns: 1fr 2fr; /* image à gauche, texte à droite */
 gap:50px;
 align-items:center;
-text-align:justify;
-line-height:1.8;
+text-align: justify;
 }
 
 .about img{
 width:100%;
+max-width:350px;
+height:auto;
 border-radius:15px;
+justify-self:start; /* force à gauche */
 }
 
 /* ================= SERVICES ================= */
@@ -598,6 +600,36 @@ border-radius:8px;
 border:none;
 }
 
+input, textarea {
+  border: 1px solid #ccc;
+  transition: 0.3s;
+}
+
+input.error, textarea.error {
+  border-color: red;
+}
+
+input.success, textarea.success {
+  border-color: #22c55e;
+  background-image: url("data:image/svg+xml;utf8,<svg fill='green' viewBox='0 0 20 20'><path d='M7.629 13.314l-3.95-3.95 1.414-1.414 2.536 2.536 5.657-5.657 1.414 1.414z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 18px;
+}
+
+input:focus, textarea:focus {
+  outline: none;
+  border-color: #38bdf8;
+  box-shadow: 0 0 0 3px rgba(56,189,248,0.2);
+}
+
+.error-message {
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
+  display: block;
+}
+
 button{
 border:none;
 cursor:pointer;
@@ -664,6 +696,24 @@ text-decoration:none;
 animation:pulse 2s infinite;
 }
 
+.whatsapp-float::after{
+    content:"Discuter sur WhatsApp";
+    position:absolute;
+    right:70px;
+    background:#0A1F44;
+    color:white;
+    padding:8px 12px;
+    border-radius:5px;
+    font-size:12px;
+    opacity:0;
+    white-space:nowrap;
+    transition:0.3s;
+}
+
+.whatsapp-float:hover::after{
+    opacity:1;
+}
+
 .whatsapp-float:hover{
 transform:translateY(-5px) scale(1.1);
 }
@@ -720,10 +770,6 @@ display:inline; /* évite les cassures bizarres */
 
 section{
 padding:50px 6%;
-}
-
-.about{
-grid-template-columns:1fr;
 }
 
 .social-links{

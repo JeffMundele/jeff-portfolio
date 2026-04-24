@@ -77,7 +77,7 @@ Développeur web Full-stack, je conçois des sites modernes, performants et opti
 <section id="about">
 <h2 class="section-title" data-aos="fade-up">À propos de moi</h2>
 <div class="about" data-aos="zoom-in">
-<img src="images/code_html.jpg">
+<img src="images/profil.jpg">
 <p>
 Développeur web basé à Kinshasa, j’aide les entreprises et entrepreneurs à améliorer leur présence en ligne et à attirer plus de clients grâce à des sites web performants.<br/><br/>
 
@@ -483,9 +483,15 @@ Mon chiffre d'affaires a augmenté de 40% grâce au site.
 <section id="contact" class="contact">
 <h2 class="section-title">Contact</h2>
 <form>
-<input type="text" name="name" placeholder="Votre nom" required>
-<input type="email" name="email" placeholder="Votre email" required>
-<textarea name="message" rows="5" placeholder="Votre message" required></textarea>
+<input type="text" id="name" name="name" placeholder="Votre nom" required>
+<small class="error-message"></small>
+
+<input type="email" id="email" name="email" placeholder="Votre email" required>
+<small class="error-message"></small>
+
+<textarea id="message" name="message" rows="5" placeholder="Votre message" required></textarea>
+<small class="error-message"></small>
+
 <button class="btn" id="submit-btn">
   <span class="btn-text">Envoyer</span>
   <span class="loader hidden"></span>

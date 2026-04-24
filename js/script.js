@@ -8,7 +8,6 @@ toggle.addEventListener("click", () => {
     nav.classList.toggle("active");
 });
 
-// Fermer le menu après clic
 document.querySelectorAll("#nav-menu a").forEach(link => {
     link.addEventListener("click", () => {
         nav.classList.remove("active");
@@ -16,36 +15,27 @@ document.querySelectorAll("#nav-menu a").forEach(link => {
     });
 });
 
-
 // ================= HEADER SCROLL =================
 window.addEventListener("scroll", () => {
-    if (window.scrollY > 50) {
-        header.classList.add("scrolled");
-    } else {
-        header.classList.remove("scrolled");
-    }
+    header.classList.toggle("scrolled", window.scrollY > 50);
 });
 
-
-// ================= AOS ANIMATION =================
+// ================= AOS =================
 AOS.init({
     duration: 1000,
     once: true
 });
 
-// ================= THEME (DARK / LIGHT) =================
-
+// ================= THEME =================
 const themeToggle = document.getElementById("theme-toggle");
 const body = document.body;
 const icon = themeToggle.querySelector("i");
 
-// Charger le thème sauvegardé
 if (localStorage.getItem("theme") === "light") {
     body.classList.add("light");
     icon.classList.replace("fa-moon", "fa-sun");
 }
 
-// Click bouton
 themeToggle.addEventListener("click", () => {
     body.classList.toggle("light");
 
@@ -58,97 +48,151 @@ themeToggle.addEventListener("click", () => {
     }
 });
 
-// ================= EMAILJS =================
-
-// Initialisation
-(function () {
-    emailjs.init("phqw0IEizahCDEGyU");
-})();
-
-// Gestion du formulaire
+// ================= FORMULAIRE =================
 const form = document.querySelector("form");
 const btn = document.getElementById("submit-btn");
 const btnText = btn.querySelector(".btn-text");
 const loader = btn.querySelector(".loader");
 
+const nameInput = document.getElementById("name");
+const emailInput = document.getElementById("email");
+const messageInput = document.getElementById("message");
+
+// ===== VALIDATION LOGIQUE =====
+function isValidName() {
+    return nameInput.value.trim().length >= 3;
+}
+
+function isValidEmail() {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regex.test(emailInput.value);
+}
+
+function isValidMessage() {
+    return messageInput.value.trim().length >= 5;
+}
+
+// ===== UI =====
+function showError(input, message) {
+    const error = input.nextElementSibling;
+    error.textContent = message;
+    input.classList.add("error");
+    input.classList.remove("success");
+}
+
+function showSuccess(input) {
+    const error = input.nextElementSibling;
+    error.textContent = "";
+    input.classList.remove("error");
+    input.classList.add("success");
+}
+
+// ===== VALIDATION TEMPS RÉEL =====
+nameInput.addEventListener("input", () => {
+    if (!isValidName()) {
+        showError(nameInput, "Minimum 3 caractères");
+    } else {
+        showSuccess(nameInput);
+    }
+    checkFormValidity();
+});
+
+emailInput.addEventListener("input", () => {
+    if (!isValidEmail()) {
+        showError(emailInput, "Email invalide");
+    } else {
+        showSuccess(emailInput);
+    }
+    checkFormValidity();
+});
+
+messageInput.addEventListener("input", () => {
+    if (!isValidMessage()) {
+        showError(messageInput, "Minimum 5 caractères");
+    } else {
+        showSuccess(messageInput);
+    }
+    checkFormValidity();
+});
+
+// ===== BOUTON =====
+function checkFormValidity() {
+    btn.disabled = !(isValidName() && isValidEmail() && isValidMessage());
+}
+
+btn.disabled = true;
+
+// ===== EMAILJS =====
+(function () {
+    emailjs.init("phqw0IEizahCDEGyU");
+})();
+
+function showError(input, message) {
+    const error = input.nextElementSibling;
+    if (!error) return;
+
+    error.textContent = message;
+    input.classList.add("error");
+    input.classList.remove("success");
+}
+
+// ===== SUBMIT =====
 form.addEventListener("submit", function (e) {
     e.preventDefault();
 
-    const name = document.querySelector("[name='name']").value;
-    const email = document.querySelector("[name='email']").value;
-    const message = document.querySelector("[name='message']").value;
-
-    // ❌ VALIDATION
-    if (!name || !email || !message) {
-        showToast("Veuillez remplir tous les champs ⚠️", "error");
+    if (!isValidName() || !isValidEmail() || !isValidMessage()) {
+        showToast("Veuillez corriger les erreurs ⚠️", "error");
         return;
     }
 
-    // ❌ VERIFICATION E-MAIL
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-if (!emailRegex.test(email)) {
-    showToast("Email invalide ❌", "error");
-    return;
-}
-
-    // 🔄 ACTIVER LOADER
     btnText.textContent = "Envoi en cours...";
     loader.classList.remove("hidden");
     btn.disabled = true;
 
-    // 1. Email pour moi
     emailjs.send("service_c74aen5", "template_y8hm5qm", {
-        from_name: name,
-        from_email: email,
-        message: message
+        from_name: nameInput.value,
+        from_email: emailInput.value,
+        message: messageInput.value
     })
 
-    // 2. Auto reply
     .then(() => {
         return emailjs.send("service_c74aen5", "template_xbm0fto", {
-            from_name: name,
-            from_email: email,
-            message: message
+            from_name: nameInput.value,
+            from_email: emailInput.value,
+            message: messageInput.value
         });
     })
 
-    // ✅ Succès
     .then(() => {
-        btnText.textContent = "Message envoyé ✅";
         showToast("Message envoyé avec succès ✅", "success");
-        loader.classList.add("hidden");
         form.reset();
 
-        setTimeout(() => {
-            btnText.textContent = "Envoyer";
-            btn.disabled = false;
-        }, 2000);
+        [nameInput, emailInput, messageInput].forEach(input => {
+            input.classList.remove("success", "error");
+            input.nextElementSibling.textContent = "";
+        });
     })
 
-    // ❌ Erreur
     .catch(() => {
-        btnText.textContent = "Erreur ❌";
-        showToast("Une erreur s'est produite ❌", "error");
+        showToast("Erreur lors de l'envoi ❌", "error");
+    })
+
+    .finally(() => {
+        btnText.textContent = "Envoyer";
         loader.classList.add("hidden");
-
-        setTimeout(() => {
-            btnText.textContent = "Envoyer";
-            btn.disabled = false;
-        }, 2000);
+        btn.disabled = true;
     });
+});
 
-    function showToast(message, type = "success") {
+// ===== TOAST =====
+function showToast(message, type = "success") {
     const toast = document.getElementById("toast");
     const toastMessage = document.getElementById("toast-message");
 
     toastMessage.textContent = message;
-
-    // reset classes
     toast.className = "toast show " + type;
 
     setTimeout(() => {
         toast.classList.remove("show");
     }, 3000);
 }
-});
