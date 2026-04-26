@@ -772,16 +772,18 @@ section{
 padding:50px 6%;
 }
 
-.about {
-    flex-direction: column;
-    text-align: center;
+.about{
+    display: flex;          /* 🔥 important */
+    flex-direction: column; /* empile */
+    text-align: justify;    /* texte justifié */
+    gap:20px;
   }
 
-  .about img {
-    width: 100%;
-    max-width: 250px;
-    margin: 0 auto 20px auto;
-    display: block;
+  .about img{
+    width:100%;
+    max-width:250px;
+    margin:auto;
+    display:block;
   }
 
 .social-links{
