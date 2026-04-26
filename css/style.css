@@ -295,6 +295,66 @@ border-radius:15px;
 justify-self:start; /* force à gauche */
 }
 
+/* ================= ABOUT PAGE (PRO VERSION) ================= */
+
+.about-hero {
+  min-height: 60vh;
+}
+
+.about-container {
+  padding-top: 40px;
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 50px;
+  align-items: center;
+}
+
+.about-image img {
+  width: 100%;
+  max-width: 350px;
+  border-radius: 15px;
+  border: 3px solid #38bdf8;
+}
+
+.about-content h2 {
+  font-size: 30px;
+  margin-bottom: 15px;
+}
+
+.about-content h3 {
+  margin-top: 20px;
+  color: #38bdf8;
+}
+
+.about-content p {
+  margin-bottom: 15px;
+  color: #cbd5f5;
+  line-height: 1.7;
+  text-align: justify;
+}
+
+.about-content ul {
+  margin-top: 10px;
+  padding-left: 20px;
+}
+
+.about-content ul li {
+  margin-bottom: 8px;
+}
+
+/* SECTION MÉTHODE */
+.about-values {
+  text-align: center;
+}
+
+/* CTA */
+.about-cta {
+  margin-top: 40px;
+}
+
 /* ================= SERVICES ================= */
 .services{
 display:grid;
@@ -675,6 +735,37 @@ padding:25px;
 margin-top:50px;
 }
 
+/* CTA spacing propre et cohérent */
+
+.about-cta p {
+  margin-bottom: 25px;
+}
+
+.about-cta .btn {
+  margin-top: 10px;
+}
+
+/* Services page CTA */
+section[style*="text-align:center"] p {
+  margin-bottom: 25px;
+}
+
+section[style*="text-align:center"] .btn {
+  margin-top: 10px;
+}
+
+.cta-section {
+  text-align: center;
+}
+
+.cta-section p {
+  margin-bottom: 25px;
+}
+
+.cta-section .btn {
+  margin-top: 10px;
+}
+
 
 /* ================= WHATSAPP FLOAT ================= */
 .whatsapp-float{
@@ -750,6 +841,11 @@ nav.active{
 transform:translateY(0);
 }
 
+nav a.active{
+color:#38bdf8;
+font-weight:600;
+}
+
 nav a{
 margin:0;
 font-size:18px;
@@ -784,6 +880,19 @@ padding:50px 6%;
     max-width:250px;
     margin:auto;
     display:block;
+  }
+
+.about-grid {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .about-image img {
+    margin: auto;
+  }
+
+  .about-content {
+    text-align: justify;
   }
 
 .social-links{
